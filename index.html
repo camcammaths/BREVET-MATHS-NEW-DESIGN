@@ -1,1 +1,339 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+
+<!-- ─────────────────────────────────────────────────────────────────
+     SECTION 1 — HEAD
+     ───────────────────────────────────────────────────────────────── -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brevet Blanc Maths – Exercices Corrigés en Ligne | 3ème</title>
+<meta name="description" content="Préparez votre brevet blanc de maths avec des exercices interactifs corrigés par IA. Simulateur d'examen chronométré, corrigés détaillés, suivi de progression. Gratuit pour les élèves de 3ème.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style/style.css">
+</head>
+
+<!-- ─────────────────────────────────────────────────────────────────
+     SECTION 3 — INDEX HTML
+       3.1  Navigation globale
+       3.2  Écran Landing (#screen-landing)
+       3.3  Écran Setup (#screen-setup)
+       3.4  Écran Examen (#screen-exam)
+       3.5  Écran Résultats (#screen-results)
+       3.6  Tableau de bord (#screen-dash)
+     ───────────────────────────────────────────────────────────────── -->
+<body>
+
+<!-- ── 3.1  Navigation globale ──────────────────────────────────────
+     Barre sticky en haut de toutes les vues.
+     Logo cliquable → landing | Liens : Commencer, Tableau de bord
+     ──────────────────────────────────────────────────────────────── -->
+<nav class="gnav" id="gnav">
+  <div class="gnav-logo" onclick="go('screen-landing','navLanding')"><em>Brevet</em> Blanc Maths</div>
+  <div class="gnav-links">
+    <button class="gnav-link" id="navSetup" onclick="go('screen-setup','navSetup')">Commencer</button>
+    <button class="gnav-link" id="navDash" onclick="go('screen-dash','navDash');renderDash()">Tableau de bord</button>
+    <a class="gnav-link" href="abonnement.html">Abonnement</a>
+  </div>
+
+     
+</nav>
+
+<!-- ── 3.2  Écran Landing ────────────────────────────────────────────
+     Page d'accueil plein écran.
+     Héro 2 colonnes :
+       • Gauche : accroche, tagline, boutons CTA
+       • Droite : 2 tuiles de chiffres clés (48 exos / 10 notions)
+     Pied de page : bande 4 arguments produit
+     ──────────────────────────────────────────────────────────────── -->
+<div class="screen active" id="screen-landing">
+<div class="lp">
+  <div class="lp-hero">
+    <!-- Colonne gauche : pitch principal -->
+    <div class="lp-left">
+      <span class="lp-kicker">Diplôme National du Brevet · 3ème</span>
+      <p class="lp-tagline">Exercices officiels DNB corrigés par IA, chronomètre d'examen réel, suivi de progression.</p>
+      <div class="lp-cta-row">
+        <button class="btn btn-primary" style="padding:13px 28px;font-size:14px" onclick="go('screen-setup','navSetup')">Commencer</button>
+        <button class="btn btn-light" style="padding:13px 22px;font-size:14px" onclick="alert('Fonctionnalité bientôt disponible.')">S'identifier</button>
+        <button class="btn btn-primary" style="padding:13px 22px;font-size:14px;background:var(--green);border-color:var(--green)" onclick="alert('Fonctionnalité bientôt disponible.')">S'abonner</button>
+      </div>
+    </div>
+    <!-- Colonne droite : tuiles statistiques -->
+    <div class="lp-right">
+      <div class="lp-tile">
+        <div class="lp-tile-n">48</div>
+        <div class="lp-tile-label">exercices issus des vrais sujets DNB 2023–2024</div>
+      </div>
+      <div class="lp-tile">
+        <div class="lp-tile-n">10</div>
+        <div class="lp-tile-label">notions du programme officiel de 3ème</div>
+      </div>
+    </div>
+  </div>
+  <!-- Bande d'arguments produit en bas de page -->
+  <div class="lp-strip">
+    <div class="lp-strip-item"><div class="lp-strip-dot"></div><div class="lp-strip-text">Simulateur d'examen chronométré</div></div>
+    <div class="lp-strip-item"><div class="lp-strip-dot"></div><div class="lp-strip-text">Corrigés détaillés étape par étape</div></div>
+    <div class="lp-strip-item"><div class="lp-strip-dot"></div><div class="lp-strip-text">Suivi de progression par notion</div></div>
+    <div class="lp-strip-item"><div class="lp-strip-dot"></div><div class="lp-strip-text">100 % gratuit · aucune inscription</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ── 3.3  Écran Setup ──────────────────────────────────────────────
+     Configuration de l'épreuve avant de démarrer.
+     • Hero bleu : titre + mini-stats (pts, durée)
+     • Corps :
+         - Sélection de la durée (chips radio)
+         - Sélection des notions (grille multi-sélection)
+         - Bouton "Démarrer le brevet"
+     ──────────────────────────────────────────────────────────────── -->
+<div class="screen" id="screen-setup">
+  <!-- Hero de configuration (fond Klein Blue) -->
+  <div class="setup-hero" style="flex-shrink:0">
+    <div class="setup-hero-inner" style="max-width:920px;margin:0 auto;padding:28px 48px 20px">
+      <div>
+        <span class="setup-eyebrow">Nouveau brevet blanc</span>
+        <h1 class="setup-h1">Choisissez votre<br><em>épreuve.</em></h1>
+        <div class="setup-hero-meta">
+          <span>100 points au total</span><span>Durée au choix</span><span>Notions ciblées</span>
+        </div>
+      </div>
+      <!-- Mini-stats : points totaux + durée sélectionnée (mise à jour par JS) -->
+      <div class="setup-stats">
+        <div class="setup-stat"><div class="setup-stat-n">100</div><div class="setup-stat-l">points</div></div>
+        <div class="setup-stat"><div class="setup-stat-n" id="setupTimerVal">2h</div><div class="setup-stat-l">durée choisie</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Corps scrollable du formulaire de setup -->
+  <div class="setup-body" style="flex:1;overflow-y:auto;min-height:0">
+
+    <!-- Bloc 1 : sélection de la durée -->
+    <div class="setup-block">
+      <div class="setup-block-title">Durée de l'épreuve</div>
+      <div class="timer-row" id="timerRow">
+        <!-- data-min : durée en minutes ; onclick : selTimer() met à jour selMin -->
+        <div class="timer-chip sel" data-min="120" onclick="selTimer(this)">2h — Durée réelle</div>
+        <div class="timer-chip" data-min="60" onclick="selTimer(this)">1 heure</div>
+        <div class="timer-chip" data-min="30" onclick="selTimer(this)">30 min</div>
+        <div class="timer-chip" data-min="10" onclick="selTimer(this)">10 min</div>
+        <div class="timer-chip" data-min="5" onclick="selTimer(this)">5 min</div>
+      </div>
+    </div>
+
+    <!-- Bloc 2 : sélection des notions (data-id utilisé par selChap()) -->
+    <div class="setup-block">
+      <div class="setup-block-title">Notions à travailler</div>
+      <div class="chap-grid" id="chapGrid">
+        <div class="chap-chip sel" data-id="all" onclick="selChap(this)"><div class="chk">✓</div><div><div class="ch-name">Toutes les notions</div><div class="ch-sub">Sujet complet type brevet</div></div></div>
+        <div class="chap-chip" data-id="probabilites" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Probabilités</div><div class="ch-sub">Fréquences, événements</div></div></div>
+        <div class="chap-chip" data-id="proportionnalite" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Proportionnalité</div><div class="ch-sub">Tableaux, pourcentages</div></div></div>
+        <div class="chap-chip" data-id="statistiques" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Statistiques</div><div class="ch-sub">Moyenne, médiane, étendue</div></div></div>
+        <div class="chap-chip" data-id="geometrie" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Géométrie</div><div class="ch-sub">Pythagore, Thalès, angles</div></div></div>
+        <div class="chap-chip" data-id="algebre" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Algèbre &amp; Fonctions</div><div class="ch-sub">Équations, fonctions affines</div></div></div>
+        <div class="chap-chip" data-id="arithmetique" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Arithmétique</div><div class="ch-sub">PGCD, PPCM, nombres premiers</div></div></div>
+        <div class="chap-chip" data-id="volumes" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Volumes &amp; Grandeurs</div><div class="ch-sub">Solides, unités</div></div></div>
+        <div class="chap-chip" data-id="puissances" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Puissances</div><div class="ch-sub">Notation scientifique</div></div></div>
+        <div class="chap-chip" data-id="algorithmique" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">Algorithmique</div><div class="ch-sub">Scratch, programmes</div></div></div>
+        <div class="chap-chip" data-id="situations" onclick="selChap(this)"><div class="chk"></div><div><div class="ch-name">QCM &amp; Situations</div><div class="ch-sub">Exercices multi-notions</div></div></div>
+      </div>
+    </div>
+
+    <!-- CTA : lancer l'examen -->
+    <div class="setup-cta">
+      <button class="btn btn-dark" style="padding:13px 32px;font-size:14px" onclick="startExam()">Démarrer le brevet</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── 3.4  Écran Examen ─────────────────────────────────────────────
+     Cœur de l'application.
+     Structure :
+       • Bandeau sticky (titre, chrono, score live, bouton Terminer)
+       • Barre de progression
+       • Pills de navigation entre exercices
+       • Zone principale : spinner puis exercices injectés par JS (renderExam())
+       • Pied de page : score total courant
+     Les exercices et questions sont générés dynamiquement via renderExam().
+     ──────────────────────────────────────────────────────────────── -->
+<div class="screen" id="screen-exam">
+
+  <!-- Bandeau sticky -->
+  <div class="exam-top">
+    <div class="exam-top-inner">
+      <div class="exam-title-wrap">
+        <h2>Brevet Blanc — Mathématiques</h2>
+        <!-- Notions de l'épreuve en cours (injecté par JS) -->
+        <div class="sub" id="examSub">Chargement…</div>
+      </div>
+      <div class="timer-block">
+        <!-- Chronomètre (mis à jour chaque seconde par startTimer()) -->
+        <div>
+          <div class="timer-face" id="timerFace">02:00:00</div>
+          <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-align:center;margin-top:2px">Temps restant</div>
+        </div>
+        <!-- Score live (mis à jour à chaque validation) -->
+        <div class="live-sc-box">
+          <div style="display:flex;align-items:baseline;gap:3px;justify-content:flex-end">
+            <div class="live-sc-num" id="liveSc">0</div>
+            <span class="live-sc-denom" id="liveScMax">/0</span>
+          </div>
+          <div class="live-sc-lbl">points</div>
+        </div>
+        <!-- Bouton "Terminer" — activé uniquement quand toutes les questions sont validées -->
+        <button class="btn-end" id="btnEnd" onclick="endExam()" disabled title="Validez toutes vos réponses pour terminer">Terminer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barre de progression (largeur mise à jour par updateLive()) -->
+  <div class="exam-progress-bar"><div class="exam-progress-fill" id="examProgressFill"></div></div>
+
+  <!-- Navigation rapide entre exercices (injectée par renderExam()) -->
+  <div class="pills-bar"><div class="pills-bar-inner" id="pillsBar"></div></div>
+
+  <!-- Zone principale : spinner puis exercices -->
+  <div class="exam-main">
+    <div class="loading-box" id="loadingBox">
+      <div class="spinner"></div>
+      <p>Génération des exercices…</p>
+    </div>
+    <!-- Les exercices sont injectés ici par renderExam() -->
+    <div id="exContainer"></div>
+
+    <!-- Pied de page avec score courant (affiché après chargement) -->
+    <div class="exam-footer" id="examFooter" style="display:none">
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ink5);font-weight:600;margin-bottom:4px">Total provisoire</div>
+        <p style="font-size:13px;font-style:italic;color:var(--ink4)">Validez vos réponses pour calculer votre score</p>
+      </div>
+      <div class="footer-score-wrap">
+        <div class="footer-score"><span id="footerSc">0</span><sub> pts</sub></div>
+        <div class="footer-bar-track"><div class="footer-bar-fill" id="footerBarFill"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 3.5  Écran Résultats ──────────────────────────────────────────
+     Affiché à la fin de l'examen via endExam().
+     Structure :
+       • Hero sombre : score /100, mention, barres (correct/partiel/faux)
+       • Commentaire IA personnalisé (généré par generateComment())
+       • Bandeau CTA : nouveau brevet / tableau de bord / voir détail
+       • Grille 3 colonnes :
+           – Score par notion (bdown-row)
+           – Points à retravailler (err-card)
+           – Conseils IA (générés par generateAdvice())
+     ──────────────────────────────────────────────────────────────── -->
+<div class="screen" id="screen-results">
+
+  <!-- Hero : score géant + stats -->
+  <div class="res-hero">
+    <div class="res-hero-inner">
+      <div class="res-score-col">
+        <div class="res-eyebrow">Brevet Blanc · Résultats</div>
+        <!-- Score sur 100 (injecté par endExam()) -->
+        <div class="res-score" id="resScore">—<span>/100</span></div>
+        <!-- Mention (Très Bien, Bien…) -->
+        <div class="res-mention" id="resMention"></div>
+        <!-- Barre de score animée -->
+        <div class="res-bar-wrap"><div class="res-bar" id="resBar" style="width:0%"></div></div>
+      </div>
+      <!-- Compteurs correct / partiel / faux -->
+      <div class="res-stats-col">
+        <div class="res-stat-box"><div class="res-stat-n" id="resCorrect">—</div><div class="res-stat-l">Correctes</div></div>
+        <div class="res-stat-box partial"><div class="res-stat-n" id="resPartial">—</div><div class="res-stat-l">Partielles</div></div>
+        <div class="res-stat-box wrong"><div class="res-stat-n" id="resWrong">—</div><div class="res-stat-l">Incorrectes</div></div>
+      </div>
+    </div>
+
+    <!-- Commentaire IA (chargé de manière asynchrone) -->
+    <div class="res-comment-wrap">
+      <div class="res-hero-inner" style="padding-top:0;padding-bottom:36px">
+        <div id="resComment" class="res-comment">
+          <span class="mini-sp" style="width:14px;height:14px;border-width:2px;border-top-color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.2)"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4)">Analyse en cours…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bandeau CTA -->
+  <div class="res-cta-top">
+    <div class="res-hero-inner" style="padding:20px 48px">
+      <button class="btn btn-primary" onclick="go('screen-setup','navSetup')">Nouveau brevet</button>
+      <button class="btn btn-light" onclick="go('screen-dash','navDash');renderDash()">Tableau de bord</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('res-details').scrollIntoView({behavior:'smooth'})">Voir le détail ↓</button>
+    </div>
+  </div>
+
+  <!-- Grille détails résultats (3 colonnes) -->
+  <div class="res-main" id="res-details">
+    <!-- Col 1 : Score par notion (injecté par endExam()) -->
+    <div class="res-col"><div class="res-col-title">Score par notion</div><div id="resByNotion"></div></div>
+    <!-- Col 2 : Erreurs détaillées (injecté par endExam()) -->
+    <div class="res-col"><div class="res-col-title">Points à retravailler</div><div id="resErrors"></div></div>
+    <!-- Col 3 : Conseils IA (injecté par generateAdvice()) -->
+    <div class="res-col res-col-advice"><div class="res-col-title">Conseils de révision</div><div id="resAdvice"><div class="advice-loading"><span class="mini-sp" style="width:14px;height:14px;border-width:2px"></span><span>Chargement…</span></div></div></div>
+  </div>
+
+  <!-- Pied de page résultats -->
+  <div class="res-footer">
+    <button class="btn btn-primary" onclick="go('screen-setup','navSetup')">Nouveau brevet</button>
+    <button class="btn btn-light" onclick="go('screen-dash','navDash');renderDash()">Tableau de bord</button>
+  </div>
+</div>
+
+<!-- ── 3.6  Tableau de bord ──────────────────────────────────────────
+     Vue statistiques multi-sessions.
+     Structure (générée par renderDash()) :
+       • Bandeau titre
+       • Corps :
+           - Ligne de cartes statistiques (#dashStats)
+           - Graphique progression des scores (#chartSection)
+           - Grille 3 colonnes :
+               · Historique des sessions
+               · Notions faibles (barres horizontales)
+               · Conseils IA globaux (#dashAdvice)
+     ──────────────────────────────────────────────────────────────── -->
+<div class="screen" id="screen-dash">
+
+  <!-- Bandeau titre -->
+  <div class="dash-banner">
+    <div class="dash-banner-inner" style="padding:36px 48px 28px">
+      <span style="color:rgba(255,255,255,.3);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;font-weight:700;display:block;margin-bottom:8px">Votre espace</span>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-1.5px;text-transform:uppercase;color:#fff;line-height:.92;margin:0">Tableau de <em style="font-style:normal;color:rgba(150,180,255,.85)">bord</em></h2>
+    </div>
+  </div>
+
+  <!-- Corps du dashboard (entièrement injecté par renderDash()) -->
+  <div class="dash-body">
+    <!-- Cartes statistiques (nb sessions, moyenne, meilleur score, évolution, dernière mention) -->
+    <div class="stat-row" id="dashStats"></div>
+    <!-- Graphique barres (visible si ≥ 2 sessions) -->
+    <div class="chart-section" id="chartSection" style="display:none;margin-bottom:32px">
+      <div class="chart-wrap" id="chartWrap"></div>
+    </div>
+    <!-- Grille 3 colonnes : historique / points faibles / conseils -->
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1.1fr;gap:36px;align-items:start" id="dashGrid"></div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────
+     SCRIPTS — chargés en fin de body pour garantir que le DOM est prêt
+     Ordre important : Exercices.js (BANK) doit être chargé AVANT app.js
+     ───────────────────────────────────────────────────────────────── -->
+<script src="script/exercices.js"></script>
+<script src="script/app.js"></script>
+
+
+
+     
+</body>
+</html>
+
