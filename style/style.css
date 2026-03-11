@@ -1,1 +1,1134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prépa Brevet — Maths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:    #0021BC;
+  --blue-lt: #BDD4E7;
+  --orange:  #EE6E34;
+  --rose:    #D0A6C6;
+  --bg:      #EDEEF0;
+  --white:   #FFFFFF;
+  --ink:     rgb(25,8,6);
+  --muted:   #8A8DAA;
+  --fd: 'Plus Jakarta Sans', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); font-family:var(--fb); color:var(--ink); }
 
+/* PAGES */
+.page { display:none; min-height:100vh; }
+.page.active { display:block; }
+
+/* NAV */
+.nav { display:flex; align-items:center; justify-content:space-between; padding:20px 48px; background:var(--bg); border-bottom:1px solid rgba(0,33,188,0.08); position:sticky; top:0; z-index:100; }
+.nav-logo { cursor:pointer; line-height:1; }
+.nav-logo-top { display:block; font-family:var(--fd); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); }
+.nav-logo-bottom { display:block; font-family:var(--fd); font-size:22px; font-weight:500; letter-spacing:-0.04em; color:var(--ink); text-transform:lowercase; }
+.nav-logo-bottom span { color:var(--blue); }
+.nav-right { display:flex; align-items:center; gap:32px; }
+.nav-links { list-style:none; display:flex; gap:24px; }
+.nav-links li { font-family:var(--fd); font-size:13px; font-weight:500; color:var(--muted); cursor:pointer; text-transform:lowercase; letter-spacing:-0.01em; transition:color 0.15s; }
+.nav-links li:hover, .nav-links li.on { color:var(--ink); opacity:1; }
+.nav-cta { font-family:var(--fd); font-size:13px; font-weight:600; background:var(--blue); color:#fff; border:none; border-radius:100px; padding:11px 24px; cursor:pointer; text-transform:lowercase; letter-spacing:-0.01em; }
+
+/* HERO */
+.hero { display:grid; grid-template-columns:1fr 1fr; gap:0; min-height:70vh; }
+.hero-left { padding:64px 48px; display:flex; flex-direction:column; justify-content:center; }
+.hero-eyebrow { font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; }
+.hero-h1 { font-family:var(--fd); font-size:clamp(52px,7vw,96px); font-weight:500; line-height:0.96; letter-spacing:-0.05em; color:var(--ink); text-transform:lowercase; margin-bottom:32px; }
+.hero-sub { font-size:15px; color:var(--muted); font-weight:300; line-height:1.65; max-width:400px; margin-bottom:40px; }
+.hero-btns { display:flex; gap:12px; }
+.btn { font-family:var(--fd); font-size:13px; font-weight:600; border-radius:100px; padding:13px 28px; cursor:pointer; text-transform:lowercase; letter-spacing:-0.01em; border:none; transition:all 0.15s; }
+.btn-blue { background:var(--blue); color:#fff; }
+.btn-blue:hover { background:#001a9a; }
+.btn-ghost { background:transparent; color:var(--ink); border:1.5px solid rgba(0,0,0,0.15); }
+.btn-ghost:hover { border-color:var(--ink); }
+.btn-orange { background:var(--orange); color:#fff; }
+
+/* HERO RIGHT — blocs couleur */
+.hero-right { display:grid; grid-template-rows:1fr 1fr 1fr; }
+.hero-bloc { display:flex; align-items:flex-end; padding:28px 32px; position:relative; overflow:hidden; }
+.hero-bloc-label { font-family:var(--fd); font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; opacity:0.7; }
+.hero-bloc-year { font-family:var(--fd); font-size:48px; font-weight:500; letter-spacing:-0.04em; line-height:1; }
+.hb1 { background:var(--blue); color:#fff; grid-row:1/2; }
+.hb2 { background:var(--blue-lt); color:var(--ink); grid-row:2/3; }
+.hb3 { background:var(--orange); color:#fff; grid-row:3/4; }
+
+/* STATS STRIP */
+.stats-strip { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid rgba(0,33,188,0.08); border-bottom:1px solid rgba(0,33,188,0.08); }
+.stat-cell { padding:28px 48px; border-right:1px solid rgba(0,33,188,0.08); }
+.stat-cell:last-child { border-right:none; }
+.stat-n { font-family:var(--fd); font-size:36px; font-weight:500; letter-spacing:-0.04em; color:var(--blue); line-height:1; }
+.stat-l { font-size:12px; color:var(--muted); margin-top:4px; font-weight:300; }
+
+/* ANNALES GRID */
+.annales-section { padding:64px 48px; }
+.section-title { font-family:var(--fd); font-size:13px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:32px; }
+.annales-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.annale-card { background:var(--white); border-radius:16px; padding:28px; cursor:pointer; border:2px solid transparent; transition:all 0.15s; }
+.annale-card:hover { border-color:var(--blue-lt); }
+.annale-card-year { font-family:var(--fd); font-size:48px; font-weight:500; letter-spacing:-0.04em; color:var(--ink); line-height:1; margin-bottom:16px; }
+.annale-card-label { font-size:12px; color:var(--muted); font-weight:300; margin-bottom:20px; }
+.annale-card-bar { height:4px; background:var(--bg); border-radius:2px; overflow:hidden; }
+.annale-card-fill { height:100%; border-radius:2px; background:var(--blue); }
+
+/* DIVIDER */
+.divider { height:1px; background:rgba(0,33,188,0.08); margin:0; }
+
+/* FOOTER */
+.footer-email-wrap { display:flex; align-items:center; justify-content:space-between; padding:48px 48px; border-bottom:1px solid rgba(0,33,188,0.08); }
+.footer-email { font-family:var(--fd); font-size:clamp(28px,4vw,56px); font-weight:500; letter-spacing:-0.04em; color:var(--ink); text-transform:lowercase; }
+.footer-arrow { width:48px; height:48px; flex-shrink:0; }
+.footer-arrow svg { width:100%; height:100%; }
+.footer-bar { display:flex; align-items:center; justify-content:space-between; padding:16px 48px; background:var(--blue); }
+.footer-bar-links { display:flex; gap:20px; }
+.footer-bar-links a { font-family:var(--fd); font-size:12px; color:rgba(255,255,255,0.6); cursor:pointer; text-transform:lowercase; letter-spacing:-0.01em; }
+.footer-bar-links a:hover { color:#fff; }
+.footer-bar-copy { font-size:11px; color:rgba(255,255,255,0.4); }
+
+/* PAGE EXERCICES */
+.ex-header { padding:48px 48px 32px; }
+.ex-filters { display:flex; gap:8px; flex-wrap:wrap; padding:0 48px 24px; }
+.fbtn { font-family:var(--fd); font-size:12px; font-weight:500; padding:8px 18px; border-radius:100px; border:1.5px solid rgba(0,0,0,0.12); background:transparent; color:var(--muted); cursor:pointer; text-transform:lowercase; transition:all 0.15s; }
+.fbtn:hover { border-color:var(--blue); color:var(--blue); }
+.ex-list { padding:0 48px 64px; display:flex; flex-direction:column; gap:10px; }
+.ex-row { background:var(--white); border-radius:14px; padding:20px 24px; display:flex; align-items:center; gap:20px; border:2px solid transparent; transition:border-color 0.15s; }
+.ex-row:hover { border-color:var(--blue-lt); }
+.ex-idx { font-family:var(--fd); font-size:28px; font-weight:500; letter-spacing:-0.04em; color:var(--ink); opacity:0.25; min-width:64px; }
+.ex-info { flex:1; min-width:0; }
+.ex-name { font-family:var(--fd); font-size:15px; font-weight:500; color:var(--ink); text-transform:lowercase; letter-spacing:-0.02em; margin-bottom:4px; }
+.ex-meta { font-size:12px; color:var(--muted); font-weight:300; }
+.ex-rtags { display:flex; gap:6px; margin-bottom:8px; }
+.ctag { font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:3px 10px; border-radius:100px; background:var(--bg); color:var(--muted); }
+.ctag.b { background:#EEF2FF; color:var(--blue); }
+.ctag.o { background:#FFF0E8; color:var(--orange); }
+.ex-score { font-family:var(--fd); font-size:24px; font-weight:500; color:var(--blue); min-width:48px; text-align:right; }
+.ex-action { font-family:var(--fd); font-size:12px; font-weight:600; border:none; border-radius:100px; padding:10px 20px; cursor:pointer; text-transform:lowercase; white-space:nowrap; }
+.ea-blue { background:var(--blue); color:#fff; }
+.ea-orange { background:var(--orange); color:#fff; }
+
+/* PAGE PARCOURS */
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-bottom:1px solid rgba(0,33,188,0.08); }
+.kpi-cell { padding:36px 48px; border-right:1px solid rgba(0,33,188,0.08); }
+.kpi-cell:last-child { border-right:none; }
+.kpi-val { font-family:var(--fd); font-size:48px; font-weight:500; letter-spacing:-0.04em; line-height:1; margin-bottom:6px; }
+.kpi-label { font-size:12px; color:var(--muted); font-weight:300; }
+
+/* PAGE ABONNEMENT */
+.plans-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:0 48px 64px; max-width:900px; }
+.plan-card { border-radius:20px; padding:40px; }
+.plan-free { background:var(--white); }
+.plan-premium { background:var(--blue); color:#fff; }
+.plan-name { font-family:var(--fd); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:24px; }
+.plan-price-main { font-family:var(--fd); font-size:72px; font-weight:500; letter-spacing:-0.05em; line-height:1; }
+.plan-price-period { font-size:16px; font-weight:300; opacity:0.6; }
+.plan-features { list-style:none; margin:28px 0; display:flex; flex-direction:column; gap:12px; }
+.plan-features li { font-size:14px; font-weight:300; line-height:1.5; padding-left:20px; position:relative; }
+.plan-features li::before { content:"✓"; position:absolute; left:0; font-weight:700; }
+.plan-free .plan-features li::before { color:var(--blue); }
+.plan-premium .plan-features li::before { color:rgba(255,255,255,0.6); }
+
+/* PAGE CONFIG */
+.config-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; padding:56px 48px; max-width:1100px; }
+.config-label { font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:28px; }
+.dur-option { display:flex; align-items:center; justify-content:space-between; background:var(--white); border-radius:14px; padding:22px 28px; cursor:pointer; border:2px solid transparent; transition:all 0.15s; margin-bottom:10px; }
+.dur-option.selected { border-color:var(--blue); background:#EEF2FF; }
+.dur-dot { width:22px; height:22px; border-radius:50%; border:2px solid rgba(0,0,0,0.15); flex-shrink:0; transition:all 0.15s; }
+.dur-option.selected .dur-dot { background:var(--blue); border-color:var(--blue); }
+.notion-option { display:flex; align-items:center; justify-content:space-between; background:var(--white); border-radius:14px; padding:18px 24px; cursor:pointer; border:2px solid transparent; transition:all 0.15s; margin-bottom:8px; }
+.notion-option.selected { border-color:var(--blue); background:#EEF2FF; }
+.notion-dot { width:20px; height:20px; border-radius:6px; border:2px solid rgba(0,0,0,0.15); flex-shrink:0; transition:all 0.15s; }
+.notion-option.selected .notion-dot { background:var(--blue); border-color:var(--blue); }
+.config-recap { margin:0 48px 64px; max-width:1100px; background:var(--white); border-radius:16px; padding:28px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+
+/* PAGE BIBLIOTHÈQUE */
+.db-filters { display:flex; gap:8px; flex-wrap:wrap; padding:24px 48px 0; }
+.db-filter-btn { font-family:var(--fd); font-size:12px; font-weight:600; padding:8px 18px; border-radius:100px; border:1.5px solid rgba(0,0,0,0.12); background:transparent; color:var(--muted); cursor:pointer; text-transform:lowercase; transition:all 0.15s; }
+.db-filter-btn.active { background:var(--blue); border-color:var(--blue); color:#fff; }
+.db-list { padding:20px 48px 64px; display:flex; flex-direction:column; gap:10px; }
+.db-row { background:var(--white); border-radius:14px; padding:20px 24px; display:flex; align-items:center; gap:16px; cursor:pointer; border:2px solid transparent; transition:border-color 0.15s; }
+.db-row:hover { border-color:var(--blue-lt); }
+.db-row-info { flex:1; min-width:0; }
+.db-row-source { font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.db-row-title { font-family:var(--fd); font-size:15px; font-weight:500; color:var(--ink); text-transform:lowercase; letter-spacing:-0.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.db-row-meta { font-size:12px; color:var(--muted); margin-top:3px; }
+.db-row-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+
+/* PAGE EXERCICE DÉTAIL */
+.ex-detail-wrap { padding:40px 48px 0; max-width:860px; }
+.question-block { background:var(--white); border-radius:14px; padding:24px 28px; margin-bottom:12px; }
+.question-num { font-family:var(--fd); font-size:15px; font-weight:700; color:var(--blue); min-width:22px; flex-shrink:0; }
+.question-text { font-size:14px; line-height:1.72; color:var(--ink); margin:0; }
+.question-pts { font-size:11px; font-weight:600; color:var(--muted); white-space:nowrap; }
+.q-textarea { width:100%; min-height:72px; border:2px solid rgba(0,33,188,0.12); border-radius:10px; padding:12px; font-family:var(--fb); font-size:13.5px; resize:vertical; outline:none; background:#FAFBFF; box-sizing:border-box; margin-top:14px; }
+.q-textarea:focus { border-color:var(--blue); }
+.corrige-btn { font-family:var(--fd); font-size:11.5px; font-weight:600; background:transparent; border:1.5px solid rgba(0,0,0,0.12); border-radius:100px; padding:6px 16px; cursor:pointer; color:var(--muted); text-transform:lowercase; margin-top:8px; }
+.corrige-box { display:none; margin-top:10px; background:#EEF2FF; border-radius:10px; padding:14px 18px; border-left:3px solid var(--blue); }
+.corrige-label { font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--blue); margin-bottom:6px; }
+.corrige-text { font-size:13.5px; line-height:1.7; color:var(--ink); margin:0; white-space:pre-line; }
+
+/* ANNALE 2025 */
+.annale-wrap { padding:40px 48px 0; max-width:860px; }
+.annale-intro-box { background:var(--white); border-radius:14px; padding:22px 28px; margin-bottom:28px; border-left:4px solid var(--blue-lt); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ PAGE ACCUEIL ═══ -->
+<div class="page active" id="page-accueil">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li class="on">accueil</li>
+      <li onclick="showPage('exercices')">exercices</li>
+      <li onclick="showPage('parcours')">mon parcours</li>
+      <li onclick="showPage('ressources')">ressources</li>
+      <li onclick="showPage('abonnement')" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">brevet de mathématiques · annales officielles</p>
+    <h1 class="hero-h1">prépare,<br>entraîne-toi,<br>réussis.</h1>
+    <p class="hero-sub">Toutes les annales du brevet de maths de 2018 à 2025, corrigées et interactives.</p>
+    <div class="hero-btns">
+      <button class="btn btn-blue" onclick="showPage('config')">commencer →</button>
+      <button class="btn btn-ghost" onclick="showPage('parcours')">mon parcours</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bloc hb1">
+      <div>
+        <div class="hero-bloc-label">annales</div>
+        <div class="hero-bloc-year">2018–21</div>
+      </div>
+    </div>
+    <div class="hero-bloc hb2">
+      <div>
+        <div class="hero-bloc-label">annales</div>
+        <div class="hero-bloc-year">2022–23</div>
+      </div>
+    </div>
+    <div class="hero-bloc hb3">
+      <div>
+        <div class="hero-bloc-label">annale</div>
+        <div class="hero-bloc-year">2024–25</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-strip">
+  <div class="stat-cell"><div class="stat-n" style="color:var(--blue);">17</div><div class="stat-l">sujets officiels</div></div>
+  <div class="stat-cell"><div class="stat-n">2018</div><div class="stat-l">première annale</div></div>
+  <div class="stat-cell"><div class="stat-n" style="color:var(--orange);">100%</div><div class="stat-l">corrigés détaillés</div></div>
+  <div class="stat-cell"><div class="stat-n">2h ⏱</div><div class="stat-l">durée officielle</div></div>
+</div>
+
+<div class="annales-section">
+  <p class="section-title">les annales disponibles</p>
+  <div class="annales-grid">
+    <div class="annale-card" onclick="showPage('bibliotheque')">
+      <div class="annale-card-year">2025</div>
+      <div class="annale-card-label">métropole · juin 2025 ✦</div>
+      <div class="annale-card-bar"><div class="annale-card-fill" style="width:0%;background:var(--orange);"></div></div>
+    </div>
+    <div class="annale-card" onclick="showPage('exercices')">
+      <div class="annale-card-year">2024</div>
+      <div class="annale-card-label">métropole · session normale</div>
+      <div class="annale-card-bar"><div class="annale-card-fill" style="width:40%;"></div></div>
+    </div>
+    <div class="annale-card" onclick="showPage('exercices')">
+      <div class="annale-card-year">2023</div>
+      <div class="annale-card-label">métropole · juin 2023</div>
+      <div class="annale-card-bar"><div class="annale-card-fill" style="width:70%;"></div></div>
+    </div>
+    <div class="annale-card" onclick="showPage('exercices')">
+      <div class="annale-card-year">2022</div>
+      <div class="annale-card-label">métropole · juin 2022</div>
+      <div class="annale-card-bar"><div class="annale-card-fill" style="width:85%;"></div></div>
+    </div>
+    <div class="annale-card" onclick="showPage('exercices')">
+      <div class="annale-card-year">2021</div>
+      <div class="annale-card-label">métropole · session normale</div>
+      <div class="annale-card-bar"><div class="annale-card-fill" style="width:100%;"></div></div>
+    </div>
+    <div class="annale-card" onclick="showPage('exercices')">
+      <div class="annale-card-year">2018</div>
+      <div class="annale-card-label">métropole · session normale</div>
+      <div class="annale-card-bar"><div class="annale-card-fill" style="width:100%;"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-email-wrap">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════ PAGE EXERCICES ═══ -->
+<div class="page" id="page-exercices">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li onclick="showPage('accueil')">accueil</li>
+      <li class="on">exercices</li>
+      <li onclick="showPage('parcours')">mon parcours</li>
+      <li onclick="showPage('ressources')">ressources</li>
+      <li onclick="showPage('abonnement')" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+
+<div class="ex-header">
+  <p class="hero-eyebrow" style="margin-bottom:12px;">annales officielles</p>
+  <h1 style="font-family:var(--fd);font-size:clamp(36px,5vw,72px);font-weight:500;line-height:1.0;letter-spacing:-0.04em;text-transform:lowercase;margin-bottom:8px;">toutes les annales</h1>
+  <p style="font-size:14px;color:var(--muted);font-weight:300;">score global · <strong style="color:var(--blue);">62%</strong></p>
+</div>
+
+<div class="ex-filters">
+  <button class="fbtn">toutes les années</button>
+  <button class="fbtn">2025</button>
+  <button class="fbtn">2024</button>
+  <button class="fbtn">2023</button>
+  <button class="fbtn">2022</button>
+  <button class="fbtn">2021</button>
+  <button class="fbtn">2018</button>
+  <button class="fbtn">session normale</button>
+  <button class="fbtn">session remplacement</button>
+</div>
+
+<div style="padding:12px 48px 16px;display:flex;justify-content:flex-end;">
+  <button class="btn btn-blue" onclick="showPage('bibliotheque')" style="font-size:12px;padding:10px 22px;">✦ explorer tous les exercices →</button>
+</div>
+
+<div class="ex-list">
+  <div class="ex-row" style="border-color:var(--orange);background:#FFF8F5;">
+    <div class="ex-idx" style="color:var(--orange);opacity:1;">2025</div>
+    <div class="ex-info">
+      <div class="ex-rtags"><span class="ctag o">nouveau ✦</span><span class="ctag b">officiel</span><span class="ctag">métropole · juin 2025</span></div>
+      <div class="ex-name">brevet de mathématiques 2025 — métropole</div>
+      <div class="ex-meta">sujet complet · 2h · 5 exercices</div>
+    </div>
+    <div class="ex-score" style="color:rgba(0,0,0,0.15);">—</div>
+    <button class="ex-action ea-orange" onclick="showPage('annale-2025')">commencer ▶</button>
+  </div>
+  <div class="ex-row">
+    <div class="ex-idx">2024</div>
+    <div class="ex-info">
+      <div class="ex-rtags"><span class="ctag b">officiel</span><span class="ctag">métropole · juin 2024</span></div>
+      <div class="ex-name">brevet de mathématiques 2024</div>
+      <div class="ex-meta">sujet complet · 2h</div>
+    </div>
+    <div class="ex-score">74%</div>
+    <button class="ex-action ea-blue" onclick="showPage('config')">continuer ▶</button>
+  </div>
+  <div class="ex-row">
+    <div class="ex-idx">2023</div>
+    <div class="ex-info">
+      <div class="ex-rtags"><span class="ctag b">officiel</span><span class="ctag">métropole · juin 2023</span></div>
+      <div class="ex-name">brevet de mathématiques 2023</div>
+      <div class="ex-meta">sujet complet · 2h</div>
+    </div>
+    <div class="ex-score" style="color:var(--blue);">✓</div>
+    <button class="ex-action ea-blue" onclick="showPage('config')">refaire ▶</button>
+  </div>
+  <div class="ex-row">
+    <div class="ex-idx">2022</div>
+    <div class="ex-info">
+      <div class="ex-rtags"><span class="ctag b">officiel</span><span class="ctag">métropole · juin 2022</span></div>
+      <div class="ex-name">brevet de mathématiques 2022</div>
+      <div class="ex-meta">sujet complet · 2h</div>
+    </div>
+    <div class="ex-score">—</div>
+    <button class="ex-action ea-blue" onclick="showPage('config')">commencer ▶</button>
+  </div>
+</div>
+
+<div class="footer-email-wrap" style="border-top:1px solid rgba(0,0,0,0.08);">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ PAGE PARCOURS ═══ -->
+<div class="page" id="page-parcours">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li onclick="showPage('accueil')">accueil</li>
+      <li onclick="showPage('exercices')">exercices</li>
+      <li class="on">mon parcours</li>
+      <li onclick="showPage('ressources')">ressources</li>
+      <li onclick="showPage('abonnement')" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+
+<div style="padding:48px 48px 32px;">
+  <p class="hero-eyebrow" style="margin-bottom:12px;">tableau de bord</p>
+  <h1 style="font-family:var(--fd);font-size:clamp(36px,5vw,72px);font-weight:500;line-height:1.0;letter-spacing:-0.04em;text-transform:lowercase;">mon parcours.</h1>
+</div>
+<div class="divider"></div>
+
+<div class="kpi-grid">
+  <div class="kpi-cell"><div class="kpi-val" style="color:var(--blue);">62%</div><div class="kpi-label">score global</div></div>
+  <div class="kpi-cell"><div class="kpi-val">7 🔥</div><div class="kpi-label">jours de suite</div></div>
+  <div class="kpi-cell"><div class="kpi-val">3</div><div class="kpi-label">annales terminées</div></div>
+  <div class="kpi-cell"><div class="kpi-val" style="color:var(--orange);">74%</div><div class="kpi-label">score moyen</div></div>
+</div>
+
+<div style="padding:48px 48px 64px;">
+  <p class="section-title">progression par annale</p>
+  <div style="display:flex;flex-direction:column;gap:16px;max-width:700px;">
+    <div style="background:var(--white);border-radius:14px;padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;"><span style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">brevet 2023</span><span style="font-family:var(--fd);font-size:15px;font-weight:600;color:var(--blue);">✓ terminé</span></div>
+      <div style="height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="height:100%;width:100%;background:var(--blue);border-radius:3px;"></div></div>
+    </div>
+    <div style="background:var(--white);border-radius:14px;padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;"><span style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">brevet 2024</span><span style="font-family:var(--fd);font-size:15px;font-weight:600;color:var(--orange);">74% · en cours</span></div>
+      <div style="height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="height:100%;width:74%;background:var(--orange);border-radius:3px;"></div></div>
+    </div>
+    <div style="background:var(--white);border-radius:14px;padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;"><span style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">brevet 2025</span><span style="font-family:var(--fd);font-size:15px;font-weight:600;color:rgba(0,0,0,0.2);">à faire</span></div>
+      <div style="height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-email-wrap" style="border-top:1px solid rgba(0,0,0,0.08);">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<!-- ════════════════════════════════════ PAGE RESSOURCES ═══ -->
+<div class="page" id="page-ressources">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li onclick="showPage('accueil')">accueil</li>
+      <li onclick="showPage('exercices')">exercices</li>
+      <li onclick="showPage('parcours')">mon parcours</li>
+      <li class="on">ressources</li>
+      <li onclick="showPage('abonnement')" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+
+<div style="padding:48px 48px 32px;">
+  <p class="hero-eyebrow" style="margin-bottom:12px;">fiches et corrigés</p>
+  <h1 style="font-family:var(--fd);font-size:clamp(36px,5vw,72px);font-weight:500;line-height:1.0;letter-spacing:-0.04em;text-transform:lowercase;">ressources.</h1>
+</div>
+<div class="divider"></div>
+
+<div style="padding:48px 48px 64px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;">
+  <div style="background:var(--white);border-radius:16px;padding:28px;" onclick="showPage('bibliotheque')" style="cursor:pointer;">
+    <div style="font-family:var(--fd);font-size:32px;font-weight:500;color:var(--blue);margin-bottom:12px;">📐</div>
+    <div style="font-family:var(--fd);font-size:16px;font-weight:500;text-transform:lowercase;margin-bottom:8px;">géométrie</div>
+    <div style="font-size:13px;color:var(--muted);font-weight:300;">Théorèmes, formules, figures</div>
+  </div>
+  <div style="background:var(--white);border-radius:16px;padding:28px;">
+    <div style="font-family:var(--fd);font-size:32px;font-weight:500;color:var(--orange);margin-bottom:12px;">📊</div>
+    <div style="font-family:var(--fd);font-size:16px;font-weight:500;text-transform:lowercase;margin-bottom:8px;">statistiques</div>
+    <div style="font-size:13px;color:var(--muted);font-weight:300;">Moyenne, médiane, étendue</div>
+  </div>
+  <div style="background:var(--white);border-radius:16px;padding:28px;">
+    <div style="font-family:var(--fd);font-size:32px;font-weight:500;color:var(--rose);margin-bottom:12px;">🎲</div>
+    <div style="font-family:var(--fd);font-size:16px;font-weight:500;text-transform:lowercase;margin-bottom:8px;">probabilités</div>
+    <div style="font-size:13px;color:var(--muted);font-weight:300;">Calculs, arbres, événements</div>
+  </div>
+</div>
+
+<div class="footer-email-wrap" style="border-top:1px solid rgba(0,0,0,0.08);">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<!-- ════════════════════════════════════ PAGE ABONNEMENT ═══ -->
+<div class="page" id="page-abonnement">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li onclick="showPage('accueil')">accueil</li>
+      <li onclick="showPage('exercices')">exercices</li>
+      <li onclick="showPage('parcours')">mon parcours</li>
+      <li onclick="showPage('ressources')">ressources</li>
+      <li class="on" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+
+<div style="padding:48px 48px 32px;">
+  <p class="hero-eyebrow" style="margin-bottom:12px;">+2k élèves · 87% de réussite · 7j essai gratuit</p>
+  <h1 style="font-family:var(--fd);font-size:clamp(36px,5vw,72px);font-weight:500;line-height:1.0;letter-spacing:-0.04em;text-transform:lowercase;margin-bottom:24px;">commence gratuitement.</h1>
+  <div style="display:flex;gap:8px;margin-bottom:8px;">
+    <button id="tog-month" onclick="togglePricing('month')" style="font-family:var(--fd);font-size:12px;font-weight:600;background:rgba(255,255,255,0.2);color:var(--ink);border:1.5px solid rgba(0,0,0,0.15);border-radius:100px;padding:7px 16px;cursor:pointer;">mensuel</button>
+    <button id="tog-year" onclick="togglePricing('year')" style="font-family:var(--fd);font-size:12px;font-weight:600;background:transparent;color:var(--muted);border:1.5px solid rgba(0,0,0,0.12);border-radius:100px;padding:7px 16px;cursor:pointer;">annuel −33%</button>
+  </div>
+</div>
+<div class="divider"></div>
+
+<div class="plans-grid">
+  <div class="plan-card plan-free">
+    <div class="plan-name">Gratuit</div>
+    <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px;">
+      <span class="plan-price-main">0€</span>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">pour toujours</div>
+    <ul class="plan-features">
+      <li>3 annales complètes</li>
+      <li>Corrigés détaillés</li>
+      <li>Suivi de progression basique</li>
+    </ul>
+    <button class="btn btn-ghost" style="width:100%;">commencer gratuitement</button>
+  </div>
+  <div class="plan-card plan-premium">
+    <div class="plan-name" style="color:rgba(255,255,255,0.6);">Premium</div>
+    <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px;">
+      <span class="plan-price-main" id="price-main">9€</span>
+      <span class="plan-price-period" id="price-period">/mois</span>
+    </div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;" id="price-sub">7 jours essai gratuit sans CB</div>
+    <ul class="plan-features">
+      <li>Toutes les annales 2018–2025</li>
+      <li>Brevet blanc personnalisé</li>
+      <li>Statistiques avancées</li>
+      <li>Accès illimité à la base d'exercices</li>
+    </ul>
+    <button class="btn" style="background:#fff;color:var(--blue);width:100%;">essayer 7 jours gratuits</button>
+  </div>
+</div>
+
+<div class="footer-email-wrap" style="border-top:1px solid rgba(0,0,0,0.08);">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ PAGE CONFIG ═══ -->
+<div class="page" id="page-config">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li onclick="showPage('accueil')">accueil</li>
+      <li onclick="showPage('exercices')">exercices</li>
+      <li onclick="showPage('parcours')">mon parcours</li>
+      <li onclick="showPage('ressources')">ressources</li>
+      <li onclick="showPage('abonnement')" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+
+<div style="padding:56px 48px 40px;">
+  <p class="hero-eyebrow" style="margin-bottom:16px;">configuration du brevet blanc</p>
+  <h1 style="font-family:var(--fd);font-size:clamp(44px,6vw,86px);font-weight:500;line-height:1.0;letter-spacing:-0.04em;color:var(--ink);text-transform:lowercase;margin-bottom:16px;">configure<br>ton épreuve.</h1>
+  <p style="font-size:15px;color:var(--muted);font-weight:300;line-height:1.65;max-width:480px;border-left:3px solid var(--blue-lt);padding-left:18px;">Choisis la durée et les notions à réviser.</p>
+</div>
+<div class="divider"></div>
+
+<div class="config-grid">
+  <div>
+    <div class="config-label">01 — durée de l'épreuve</div>
+    <div id="duree-group">
+      <div class="dur-option" onclick="selectDuree(this, '2 heures')">
+        <div><div style="font-family:var(--fd);font-size:18px;font-weight:500;text-transform:lowercase;letter-spacing:-0.02em;">2 heures</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">conditions officielles du brevet</div></div>
+        <div class="dur-dot"></div>
+      </div>
+      <div class="dur-option" onclick="selectDuree(this, '1 heure')">
+        <div><div style="font-family:var(--fd);font-size:18px;font-weight:500;text-transform:lowercase;letter-spacing:-0.02em;">1 heure</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">révision approfondie</div></div>
+        <div class="dur-dot"></div>
+      </div>
+      <div class="dur-option" onclick="selectDuree(this, '30 minutes')">
+        <div><div style="font-family:var(--fd);font-size:18px;font-weight:500;text-transform:lowercase;letter-spacing:-0.02em;">30 minutes</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">session de révision rapide</div></div>
+        <div class="dur-dot"></div>
+      </div>
+      <div class="dur-option" onclick="selectDuree(this, '10 minutes')">
+        <div><div style="font-family:var(--fd);font-size:18px;font-weight:500;text-transform:lowercase;letter-spacing:-0.02em;">10 minutes</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">entraînement éclair</div></div>
+        <div class="dur-dot"></div>
+      </div>
+      <div class="dur-option" onclick="selectDuree(this, '5 minutes')">
+        <div><div style="font-family:var(--fd);font-size:18px;font-weight:500;text-transform:lowercase;letter-spacing:-0.02em;">5 minutes</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">révision express</div></div>
+        <div class="dur-dot"></div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="config-label">02 — notions à réviser</div>
+    <div id="notions-group">
+      <div class="notion-option" id="notion-all" onclick="selectNotion(this, true)">
+        <div style="font-family:var(--fd);font-size:16px;font-weight:600;text-transform:lowercase;letter-spacing:-0.02em;">toutes les notions</div>
+        <div class="notion-dot"></div>
+      </div>
+      <div style="height:1px;background:rgba(0,0,0,0.07);margin:4px 0;"></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Statistiques')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">statistiques</div><div class="notion-dot"></div></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Arithmétique')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">arithmétique</div><div class="notion-dot"></div></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Algorithmique')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">algorithmique</div><div class="notion-dot"></div></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Probabilités')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">probabilités</div><div class="notion-dot"></div></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Géométrie')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">géométrie</div><div class="notion-dot"></div></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Volumes')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">volumes et grandeurs</div><div class="notion-dot"></div></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Proportionnalité')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">proportionnalité</div><div class="notion-dot"></div></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Algèbre')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">algèbre et fonctions</div><div class="notion-dot"></div></div>
+      <div class="notion-option" onclick="selectNotion(this, false, 'Puissances')"><div style="font-family:var(--fd);font-size:15px;font-weight:500;text-transform:lowercase;">puissances</div><div class="notion-dot"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="config-recap">
+  <div id="recap-text" style="font-family:var(--fd);font-size:16px;font-weight:500;color:var(--muted);text-transform:lowercase;letter-spacing:-0.01em;">choisis une durée et au moins une notion pour continuer</div>
+  <button id="btn-lancer" onclick="lancerBrevet()" style="font-family:var(--fd);font-size:14px;font-weight:600;background:rgba(0,0,0,0.1);color:var(--muted);border:none;border-radius:100px;padding:16px 36px;cursor:not-allowed;text-transform:lowercase;letter-spacing:-0.01em;white-space:nowrap;transition:all 0.2s;" disabled>lancer l'épreuve →</button>
+</div>
+
+<div class="footer-email-wrap" style="border-top:1px solid rgba(0,0,0,0.08);">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<!-- ════════════════════════════════ PAGE ANNALE 2025 ═══ -->
+<div class="page" id="page-annale-2025">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li onclick="showPage('accueil')">accueil</li>
+      <li class="on" onclick="showPage('exercices')">exercices</li>
+      <li onclick="showPage('parcours')">mon parcours</li>
+      <li onclick="showPage('ressources')">ressources</li>
+      <li onclick="showPage('abonnement')" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+<div style="padding:48px 48px 32px;display:flex;justify-content:space-between;align-items:flex-end;">
+  <div>
+    <p class="hero-eyebrow" style="margin-bottom:12px;">Brevet Métropole · Juin 2025</p>
+    <h1 style="font-family:var(--fd);font-size:clamp(36px,5vw,64px);font-weight:500;line-height:1.0;letter-spacing:-0.04em;text-transform:lowercase;">exercice 1<br><span style="color:var(--blue);">probabilités</span></h1>
+  </div>
+  <div style="text-align:right;"><div style="font-family:var(--fd);font-size:48px;font-weight:500;letter-spacing:-0.04em;color:var(--orange);line-height:1;">20</div><div style="font-size:12px;color:var(--muted);">points</div></div>
+</div>
+<div class="divider"></div>
+<div class="annale-wrap">
+  <div class="annale-intro-box">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Énoncé</div>
+    <p style="font-size:14.5px;line-height:1.75;">On dispose d'une urne A contenant 6 boules numérotées : <strong>7 ; 10 ; 12 ; 15 ; 24 ; 30</strong> et d'une urne B contenant 9 boules numérotées : <strong>2 ; 5 ; 6 ; 8 ; 17 ; 18 ; 21 ; 22 ; 25</strong>. Les boules sont indiscernables au toucher.</p>
+  </div>
+  <div id="annale-2025-questions"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:40px 0 56px;">
+    <button class="btn btn-ghost" onclick="showPage('exercices')">← retour aux annales</button>
+    <div style="font-family:var(--fd);font-size:13px;color:var(--muted);">exercice 1 / 5 · brevet 2025</div>
+    <button class="btn btn-blue">exercice suivant →</button>
+  </div>
+</div>
+<div class="footer-email-wrap" style="border-top:1px solid rgba(0,0,0,0.08);">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<!-- ════════════════════════════ PAGE BIBLIOTHÈQUE ═══ -->
+<div class="page" id="page-bibliotheque">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li onclick="showPage('accueil')">accueil</li>
+      <li class="on" onclick="showPage('exercices')">exercices</li>
+      <li onclick="showPage('parcours')">mon parcours</li>
+      <li onclick="showPage('ressources')">ressources</li>
+      <li onclick="showPage('abonnement')" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+<div style="padding:48px 48px 32px;">
+  <p class="hero-eyebrow" style="margin-bottom:12px;">base de données</p>
+  <h1 style="font-family:var(--fd);font-size:clamp(36px,5vw,72px);font-weight:500;line-height:1.0;letter-spacing:-0.04em;text-transform:lowercase;margin-bottom:12px;">tous les<br><span style="color:var(--blue);">exercices.</span></h1>
+  <div id="db-count" style="font-size:14px;color:var(--muted);font-weight:300;"></div>
+</div>
+<div class="divider"></div>
+<div class="db-filters" id="db-filtres"></div>
+<div class="db-list" id="db-liste"></div>
+<div class="footer-email-wrap" style="border-top:1px solid rgba(0,0,0,0.08);">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<!-- ════════════════════════ PAGE EXERCICE DÉTAIL ═══ -->
+<div class="page" id="page-exercice-detail">
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('accueil')">
+    <span class="nav-logo-top">prépa</span>
+    <span class="nav-logo-bottom">bre<span>.</span>vet</span>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li onclick="showPage('accueil')">accueil</li>
+      <li class="on" onclick="showPage('exercices')">exercices</li>
+      <li onclick="showPage('parcours')">mon parcours</li>
+      <li onclick="showPage('ressources')">ressources</li>
+      <li onclick="showPage('abonnement')" style="color:var(--orange);font-weight:600;">s'inscrire ✦</li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('config')">commencer →</button>
+  </div>
+</nav>
+<div id="ex-detail-header" style="padding:48px 48px 32px;display:flex;justify-content:space-between;align-items:flex-end;">
+  <div>
+    <p class="hero-eyebrow" id="ex-detail-source" style="margin-bottom:12px;"></p>
+    <h1 id="ex-detail-title" style="font-family:var(--fd);font-size:clamp(28px,4vw,52px);font-weight:500;line-height:1.05;letter-spacing:-0.04em;text-transform:lowercase;max-width:600px;"></h1>
+  </div>
+  <div style="text-align:right;flex-shrink:0;">
+    <div id="ex-detail-pts" style="font-family:var(--fd);font-size:48px;font-weight:500;letter-spacing:-0.04em;color:var(--orange);line-height:1;">—</div>
+    <div style="font-size:12px;color:var(--muted);">points</div>
+  </div>
+</div>
+<div class="divider"></div>
+<div class="ex-detail-wrap">
+  <div id="ex-detail-intro-box" style="background:var(--white);border-radius:14px;padding:22px 28px;margin-bottom:28px;border-left:4px solid var(--blue-lt);">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Énoncé</div>
+    <p id="ex-detail-intro" style="font-size:14.5px;line-height:1.75;margin:0;"></p>
+  </div>
+  <div id="ex-detail-questions"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin:40px 0 56px;">
+    <button class="btn btn-ghost" onclick="showPage('bibliotheque')">← retour</button>
+    <div id="ex-detail-nav-info" style="font-family:var(--fd);font-size:13px;color:var(--muted);"></div>
+    <button id="btn-ex-suivant" class="btn btn-blue" onclick="allerExSuivant()">exercice suivant →</button>
+  </div>
+</div>
+<div class="footer-email-wrap" style="border-top:1px solid rgba(0,0,0,0.08);">
+  <span class="footer-email">prepabrevet@maths.fr</span>
+  <div class="footer-arrow"><svg viewBox="0 0 42 42" fill="none"><path d="M8 8h26v26M8 34L34 8" stroke="rgb(25,8,6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-links"><a>Instagram</a><a>Newsletter</a><a>LinkedIn</a></div>
+  <span class="footer-bar-copy">© 2026 Prépa Brevet</span>
+</div>
+</div>
+
+<script>
+// ════════════ BASE DE DONNÉES ════════════
+var BANK = {
+  probabilites: [
+    {title:"Probabilités — Urne boules noires et rouges", notion:"Probabilités", pts:22, source:"DNB Centres étrangers, juin 2023",
+     intro:"Une urne contient 3 boules noires (numérotées 1 à 3) et 4 boules rouges (numérotées 1 à 4), toutes indiscernables au toucher.",
+     questions:[
+       {pts:6, text:"On pioche une boule. Quelle est la probabilité de tirer une boule rouge ?", ans:"P(rouge) = 4/7"},
+       {pts:6, text:"Quelle est la probabilité de tirer une boule portant un nombre pair ?", ans:"Pairs : noire 2, rouges 2 et 4 → 3 boules paires sur 7. P = 3/7"},
+       {pts:10, text:"On pioche deux boules avec remise. On gagne si on tire la boule rouge n°1 ET une boule noire. Probabilité de gagner ?", ans:"P(rouge1 puis noire) = 1/7 × 3/7 = 3/49. P(noire puis rouge1) = 3/7 × 1/7 = 3/49. P(gagner) = 6/49"}
+     ]},
+    {title:"Probabilités — Sac de boules et roue numérotée", notion:"Probabilités", pts:18, source:"DNB Polynésie, juin 2023",
+     intro:"Jeu 1 : sac de 5 boules (1 Noire, 2 Grises, 2 Pourpres). Jeu 2 : roue à 6 secteurs égaux numérotés 1 à 6.",
+     questions:[
+       {pts:5, text:"Jeu 1 : montrer que la probabilité de tirer une boule grise est 2/5.", ans:"2 boules G sur 5 au total → P(G) = 2/5 ✓"},
+       {pts:5, text:"Jeu 2 : quelle est la probabilité de s'arrêter sur un nombre premier ?", ans:"Nombres premiers de 1 à 6 : 2, 3, 5 → 3 secteurs sur 6. P = 3/6 = 1/2"},
+       {pts:8, text:"Jeu combiné : on tire une boule ET on tourne la roue. On gagne si boule grise ET nombre premier. Probabilité de gagner ?", ans:"Événements indépendants. P = 2/5 × 1/2 = 1/5"}
+     ]},
+    {title:"Probabilités — Deux urnes A et B", notion:"Probabilités", pts:20, source:"DNB Métropole, Juin 2025",
+     intro:"Urne A : 6 boules {7 ; 10 ; 12 ; 15 ; 24 ; 30}. Urne B : 9 boules {2 ; 5 ; 6 ; 8 ; 17 ; 18 ; 21 ; 22 ; 25}. Boules indiscernables au toucher.",
+     questions:[
+       {pts:3, text:"On tire une boule dans l'urne A. Quelle est la probabilité d'obtenir un nombre pair ?", ans:"Nombres pairs dans A : 10, 12, 24, 30 → 4 boules sur 6. P(pair) = 4/6 = 2/3"},
+       {pts:4, text:"Justifier que la probabilité d'obtenir un nombre premier dans l'urne B est 1/3.", ans:"Nombres premiers dans B : 2, 5, 17 → 3 sur 9. P(premier) = 3/9 = 1/3 ✓"},
+       {pts:4, text:"Quelle urne contient le plus grand nombre de multiples de 6 ?", ans:"Multiples de 6 dans A : {12, 24, 30} → 3 boules. Dans B : {6, 18} → 2 boules. L'urne A en contient le plus."},
+       {pts:5, text:"Démontrer que la probabilité d'obtenir un nombre ≥ 20 est la même quelle que soit l'urne choisie.", ans:"Urne A : {24, 30} → P_A = 2/6 = 1/3. Urne B : {21, 22, 25} → P_B = 3/9 = 1/3. P_A = P_B = 1/3 ✓"},
+       {pts:4, text:"On ajoute la boule numérotée 50 dans chaque urne. La probabilité d'obtenir ≥ 20 est-elle toujours égale ?", ans:"Urne A : 3/7. Urne B : 4/10 = 2/5. Or 3/7 ≠ 2/5 → Non, les probabilités ne sont plus égales."}
+     ]}
+  ],
+  statistiques: [
+    {title:"Statistiques — Prix des hôtels", notion:"Statistiques", pts:20, source:"DNB Amérique du Nord, mai 2023",
+     intro:"Prix facturés pour une nuit dans les hôtels d'une ville : 60€, 80€, 85€, 90€, 110€, 120€, 350€, 500€.",
+     questions:[
+       {pts:5, text:"Déterminer l'étendue des prix facturés.", ans:"Étendue = 500 − 60 = 440 €"},
+       {pts:8, text:"Calculer la moyenne des prix (arrondir à l'euro près).", ans:"Somme pondérée = 972 000. Effectif total = 8350. Moyenne ≈ 116 €"},
+       {pts:7, text:"L'association affirme : 'au moins la moitié des nuits est facturée à moins de 100 €'. Est-ce vrai ?", ans:"Effectifs ≤ 90 € : 4650 sur 8350 ≈ 55,7 % > 50 %. VRAI ✓"}
+     ]},
+    {title:"Statistiques — Prix vêtements, moyenne et médiane", notion:"Statistiques", pts:20, source:"DNB Amérique du Nord, mai 2024",
+     intro:"Prix d'un vêtement dans différents magasins (€) : 12 ; 15 ; 10 ; 7 ; 13",
+     questions:[
+       {pts:7, text:"La moyenne est-elle 11,40 € ? Justifier.", ans:"Moyenne = (7+10+12+13+15)/5 = 57/5 = 11,40 €. VRAIE ✓"},
+       {pts:7, text:"La médiane est-elle 10 € ? Justifier.", ans:"Valeurs triées : 7, 10, 12, 13, 15. 3e valeur = 12 €. L'affirmation est FAUSSE."},
+       {pts:6, text:"Quelle est l'étendue des prix ?", ans:"Étendue = 15 − 7 = 8 €"}
+     ]}
+  ],
+  geometrie: [
+    {title:"Géométrie — Triangle LNA et triangles semblables", notion:"Géométrie", pts:22, source:"DNB Amérique du Nord, mai 2023",
+     intro:"AN = 13 cm, LN = 5 cm, AL = 12 cm, ON = 3 cm. O appartient à [LN], H appartient à [NA]. Les triangles LNA et ONH sont semblables.",
+     questions:[
+       {pts:5, text:"Montrer que le triangle LNA est rectangle en L.", ans:"LN² + AL² = 25 + 144 = 169 = 13² = AN². Par réciproque de Pythagore, LNA est rectangle en L ✓"},
+       {pts:7, text:"Montrer que OH = 7,2 cm.", ans:"Triangles semblables : ON/LN = OH/AL → 3/5 = OH/12 → OH = 7,2 cm ✓"},
+       {pts:10, text:"Calculer l'angle LNA. Calculer l'aire du quadrilatère LOHA.", ans:"sin(LNA) = 12/13 → angle LNA ≈ 67°. Aire LNA = 30 cm². Aire ONH = 10,8 cm². Aire LOHA = 19,2 cm²."}
+     ]},
+    {title:"Géométrie — Escalier et trigonométrie", notion:"Géométrie", pts:20, source:"DNB Métropole Antilles, juin 2023",
+     intro:"Escalier de hauteur totale 272 cm. Hauteur d'une marche = 17 cm. Profondeur d'une marche = 27 cm.",
+     questions:[
+       {pts:5, text:"Montrer qu'il faut prévoir 16 marches.", ans:"272 ÷ 17 = 16 marches exactement ✓"},
+       {pts:5, text:"Montrer que la longueur de la base AB est 432 cm.", ans:"16 × 27 = 432 cm ✓"},
+       {pts:10, text:"Calculer l'angle BAC. La montée est-elle agréable (entre 25° et 40°) ?", ans:"tan(BAC) = 272/432 ≈ 0,630 → angle BAC ≈ 32°. 25° < 32° < 40° → montée agréable ✓"}
+     ]}
+  ],
+  algebre: [
+    {title:"Algèbre — Deux programmes de calcul (Amir & Sonia)", notion:"Algèbre", pts:15, source:"DNB Amérique du Nord, mai 2023",
+     intro:"Programme Amir : x → (x − 5) × 2. Programme Sonia : x → (x + 3) × x − 16.",
+     questions:[
+       {pts:5, text:"Montrer que pour x = 6, Amir donne 2 et Sonia donne 38.", ans:"Amir : (6−5)×2 = 2 ✓. Sonia : (6+3)×6 − 16 = 54−16 = 38 ✓"},
+       {pts:5, text:"Pour quel nombre les deux programmes donnent-ils le même résultat ?", ans:"Pour x = 2 : les deux donnent −6. Pour x = −3 : les deux donnent −16."},
+       {pts:5, text:"Montrer que le résultat de Sonia s'écrit x² + 3x − 16. Résoudre (x − 2)(x + 3) = 0.", ans:"Sonia : (x+3)×x − 16 = x²+3x−16 ✓. (x−2)(x+3)=0 → x=2 ou x=−3"}
+     ]},
+    {title:"Algèbre — Fonctions affines et tarifs cinéma", notion:"Algèbre", pts:20, source:"DNB Amérique du Nord, mai 2024",
+     intro:"Tarif Classique : h(x) = 11x. Tarif Essentiel : f(x) = 50 + 5x. Tarif Liberté : g(x) = 240.",
+     questions:[
+       {pts:5, text:"Avec le tarif Classique, quel est le prix pour 3 entrées ?", ans:"h(3) = 11×3 = 33 €"},
+       {pts:5, text:"Montrer qu'avec le tarif Essentiel, aller 8 fois au cinéma coûte 90 €.", ans:"f(8) = 50+5×8 = 90 € ✓"},
+       {pts:5, text:"Quel tarif donne un prix proportionnel au nombre d'entrées ?", ans:"Tarif Classique : h(x)=11x est une fonction linéaire → prix proportionnel."},
+       {pts:5, text:"À partir de combien d'entrées le tarif Liberté est-il le plus intéressant ?", ans:"240 < 50+5x → 5x > 190 → x > 38. À partir de 39 entrées."}
+     ]}
+  ],
+  arithmetique: [
+    {title:"Arithmétique — PGCD paniers de légumes", notion:"Arithmétique", pts:18, source:"DNB Nouvelle-Calédonie, déc. 2023",
+     intro:"José dispose de 39 salades, 78 carottes et 51 aubergines. Il veut faire des paniers identiques en utilisant tous les légumes.",
+     questions:[
+       {pts:6, text:"Décomposer 78 et 51 en produit de facteurs premiers.", ans:"78 = 2×3×13. 51 = 3×17"},
+       {pts:6, text:"Calculer le PGCD(39, 78, 51) et en déduire le nombre maximal de paniers.", ans:"PGCD(39,78,51) = 3. Maximum 3 paniers."},
+       {pts:6, text:"José fait 13 paniers. Combien d'aubergines par panier ? Combien en reste-t-il ?", ans:"51÷13=3 reste 12. 3 aubergines par panier, 12 aubergines non utilisées."}
+     ]},
+    {title:"Arithmétique — PPCM course de karting", notion:"Arithmétique", pts:22, source:"DNB Polynésie, juin 2023",
+     intro:"Un pilote professionnel fait un tour en 60 s, un amateur en 72 s. Ils partent ensemble au même moment.",
+     questions:[
+       {pts:7, text:"Décomposer 60 et 72 en produit de facteurs premiers.", ans:"60 = 2²×3×5. 72 = 2³×3²"},
+       {pts:8, text:"Au bout de combien de secondes se retrouveront-ils ensemble au départ ?", ans:"PPCM(60,72) = 2³×3²×5 = 360 s = 6 minutes"},
+       {pts:7, text:"Combien de tours chacun aura-t-il effectués à ce moment ?", ans:"Professionnel : 360/60 = 6 tours. Amateur : 360/72 = 5 tours"}
+     ]}
+  ],
+  volumes: [
+    {title:"Volumes — Bougies cylindriques", notion:"Volumes", pts:16, source:"DNB Amérique du Sud, nov. 2023",
+     intro:"Bougie cylindrique : rayon 3 cm, hauteur 12 cm. Volume de cire = 9/10 du volume total. Densité de la cire = 0,7 g/cm³.",
+     questions:[
+       {pts:6, text:"Montrer que le volume d'une bougie est d'environ 339 cm³.", ans:"V = π×3²×12 = 108π ≈ 339,3 cm³ ≈ 339 cm³ ✓"},
+       {pts:5, text:"Calculer la masse de cire nécessaire pour une bougie.", ans:"V cire = 9/10×339 = 305,1 cm³. Masse = 305,1×0,7 ≈ 214 g"},
+       {pts:5, text:"Objectif : 7 900 bougies/mois sur 3 mois. Jan: 6500, Fév: 8000. Combien en mars ?", ans:"Total objectif = 23 700. Déjà produit = 14 500. Mars = 9 200 bougies"}
+     ]}
+  ],
+  algorithmique: [
+    {title:"Algorithmique — Motif Fleur (Scratch)", notion:"Algorithmique", pts:20, source:"DNB Amérique du Nord, mai 2023",
+     intro:"Programme Scratch qui trace une fleur composée de 5 pétales (35 pas × 20 pas, angles 60° et 120°).",
+     questions:[
+       {pts:6, text:"Expliquer pourquoi le bloc Fleur utilise 72° entre chaque pétale.", ans:"360° ÷ 5 pétales = 72°. Cela garantit un placement régulier sur tout le tour."},
+       {pts:7, text:"Combien de fois le bloc Pétale est-il exécuté pour une fleur complète ?", ans:"5 fois (5 rotations de 72° = 360° → retour à la position initiale)."},
+       {pts:7, text:"On modifie pour une fleur à 6 pétales. Quelles modifications apporter ?", ans:"Nombre de répétitions : 6. Angle de rotation : 360°/6 = 60°."}
+     ]}
+  ]
+};
+
+// ════════════ ÉTAT ════════════
+var selectedDuree = null;
+var selectedNotions = [];
+var currentExNotion = null;
+var currentExIndex = 0;
+var dbFiltreActif = 'tous';
+
+// ════════════ NAVIGATION ════════════
+function showPage(id) {
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++) {
+    pages[i].classList.remove('active');
+  }
+  var target = document.getElementById('page-' + id);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  if (id === 'bibliotheque') renderBibliotheque();
+  if (id === 'annale-2025') renderAnnale2025();
+}
+
+// ════════════ ANNALE 2025 ════════════
+function renderAnnale2025() {
+  var exData = BANK.probabilites[2]; // Urnes A et B 2025
+  var container = document.getElementById('annale-2025-questions');
+  if (!container || container.innerHTML !== '') return;
+  container.innerHTML = buildQuestionsHTML(exData.questions, false);
+}
+
+// ════════════ BIBLIOTHÈQUE ════════════
+function renderBibliotheque() {
+  var notions = Object.keys(BANK);
+  var total = 0;
+  for (var i = 0; i < notions.length; i++) total += BANK[notions[i]].length;
+
+  document.getElementById('db-count').textContent = total + ' exercices · ' + notions.length + ' notions';
+
+  // Filtres
+  var filtresEl = document.getElementById('db-filtres');
+  filtresEl.innerHTML = '';
+
+  var btnAll = document.createElement('button');
+  btnAll.textContent = 'tous (' + total + ')';
+  btnAll.className = 'db-filter-btn' + (dbFiltreActif === 'tous' ? ' active' : '');
+  btnAll.onclick = function() { dbFiltreActif = 'tous'; renderBibliotheque(); };
+  filtresEl.appendChild(btnAll);
+
+  for (var i = 0; i < notions.length; i++) {
+    (function(k) {
+      var label = BANK[k][0] ? BANK[k][0].notion.toLowerCase() : k;
+      var btn = document.createElement('button');
+      btn.textContent = label + ' (' + BANK[k].length + ')';
+      btn.className = 'db-filter-btn' + (dbFiltreActif === k ? ' active' : '');
+      btn.onclick = function() { dbFiltreActif = k; renderBibliotheque(); };
+      filtresEl.appendChild(btn);
+    })(notions[i]);
+  }
+
+  // Liste
+  var liste = document.getElementById('db-liste');
+  liste.innerHTML = '';
+  for (var i = 0; i < notions.length; i++) {
+    var k = notions[i];
+    if (dbFiltreActif !== 'tous' && dbFiltreActif !== k) continue;
+    for (var j = 0; j < BANK[k].length; j++) {
+      (function(notion, idx) {
+        var ex = BANK[notion][idx];
+        var row = document.createElement('div');
+        row.className = 'db-row';
+        row.innerHTML =
+          '<div class="db-row-info">' +
+            '<div class="db-row-source">' + (ex.notion || '') + ' · ' + (ex.source || '') + '</div>' +
+            '<div class="db-row-title">' + ex.title + '</div>' +
+            '<div class="db-row-meta">' + (ex.questions || []).length + ' questions</div>' +
+          '</div>' +
+          '<div class="db-row-right">' +
+            '<span style="font-family:var(--fd);font-size:20px;font-weight:500;color:var(--orange);">' + ex.pts + '</span>' +
+            '<span style="font-size:11px;color:var(--muted);">pts</span>' +
+            '<button class="btn btn-blue" style="font-size:12px;padding:10px 18px;">commencer ▶</button>' +
+          '</div>';
+        row.querySelector('button').onclick = function() { ouvrirExercice(notion, idx); };
+        row.onclick = function(e) {
+          if (e.target.tagName !== 'BUTTON') ouvrirExercice(notion, idx);
+        };
+        liste.appendChild(row);
+      })(k, j);
+    }
+  }
+}
+
+// ════════════ EXERCICE DÉTAIL ════════════
+function ouvrirExercice(notion, index) {
+  if (!BANK[notion] || !BANK[notion][index]) return;
+  currentExNotion = notion;
+  currentExIndex = index;
+  var ex = BANK[notion][index];
+
+  document.getElementById('ex-detail-source').textContent = ex.source || '';
+  document.getElementById('ex-detail-title').textContent = ex.title || '';
+  document.getElementById('ex-detail-pts').textContent = ex.pts || '—';
+  document.getElementById('ex-detail-intro').textContent = ex.intro || '';
+  document.getElementById('ex-detail-nav-info').textContent = 'exercice ' + (index + 1) + ' / ' + BANK[notion].length + ' · ' + ex.notion;
+
+  var btnSuiv = document.getElementById('btn-ex-suivant');
+  btnSuiv.style.display = (index + 1 < BANK[notion].length) ? '' : 'none';
+
+  document.getElementById('ex-detail-questions').innerHTML = buildQuestionsHTML(ex.questions, true);
+  showPage('exercice-detail');
+}
+
+function allerExSuivant() {
+  if (currentExNotion && BANK[currentExNotion] && currentExIndex + 1 < BANK[currentExNotion].length) {
+    ouvrirExercice(currentExNotion, currentExIndex + 1);
+  }
+}
+
+function buildQuestionsHTML(questions, last_orange) {
+  var html = '';
+  for (var i = 0; i < questions.length; i++) {
+    var q = questions[i];
+    var isLast = last_orange && i === questions.length - 1 && questions.length > 2;
+    var numColor = isLast ? 'var(--orange)' : 'var(--blue)';
+    var corrBg = isLast ? '#FFF0E8' : '#EEF2FF';
+    var corrBorder = isLast ? 'var(--orange)' : 'var(--blue)';
+    var cid = 'corr-' + Date.now() + '-' + i;
+
+    html += '<div class="question-block">' +
+      '<div style="display:flex;gap:14px;">' +
+        '<span class="question-num" style="color:' + numColor + ';">' + (i+1) + '.</span>' +
+        '<div style="flex:1;">' +
+          '<div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:14px;">' +
+            '<p class="question-text">' + q.text + '</p>' +
+            '<span class="question-pts">' + q.pts + ' pts</span>' +
+          '</div>' +
+          '<textarea class="q-textarea" placeholder="Ta réponse ici..."></textarea>' +
+          '<button class="corrige-btn" onclick="toggleCorrige(\'' + cid + '\')">voir le corrigé</button>' +
+          '<div class="corrige-box" id="' + cid + '" style="background:' + corrBg + ';border-left-color:' + corrBorder + ';">' +
+            '<div class="corrige-label" style="color:' + corrBorder + ';">Corrigé</div>' +
+            '<p class="corrige-text">' + q.ans + '</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  return html;
+}
+
+function toggleCorrige(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' || el.style.display === '' ? 'block' : 'none';
+}
+
+// ════════════ PAGE CONFIG ════════════
+function selectDuree(el, label) {
+  var opts = document.querySelectorAll('.dur-option');
+  for (var i = 0; i < opts.length; i++) opts[i].classList.remove('selected');
+  el.classList.add('selected');
+  selectedDuree = label;
+  updateRecap();
+}
+
+function selectNotion(el, isAll, nom) {
+  if (isAll) {
+    var opts = document.querySelectorAll('.notion-option');
+    var allOn = el.classList.contains('selected');
+    for (var i = 0; i < opts.length; i++) {
+      allOn ? opts[i].classList.remove('selected') : opts[i].classList.add('selected');
+    }
+    selectedNotions = allOn ? [] : ['toutes'];
+  } else {
+    document.getElementById('notion-all').classList.remove('selected');
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+      selectedNotions = selectedNotions.filter(function(n) { return n !== nom; });
+    } else {
+      el.classList.add('selected');
+      selectedNotions = selectedNotions.filter(function(n) { return n !== 'toutes'; });
+      selectedNotions.push(nom);
+    }
+  }
+  updateRecap();
+}
+
+function updateRecap() {
+  var recap = document.getElementById('recap-text');
+  var btn = document.getElementById('btn-lancer');
+  if (!recap || !btn) return;
+  if (selectedDuree && selectedNotions.length > 0) {
+    var notionLabel = selectedNotions[0] === 'toutes' ? 'toutes les notions' :
+      selectedNotions.length === 1 ? selectedNotions[0] : selectedNotions.length + ' notions';
+    recap.style.color = 'var(--ink)';
+    recap.innerHTML = '<span style="color:var(--blue);font-weight:600;">' + selectedDuree + '</span> · ' + notionLabel;
+    btn.style.background = 'var(--blue)';
+    btn.style.color = '#fff';
+    btn.style.cursor = 'pointer';
+    btn.disabled = false;
+  } else {
+    recap.style.color = 'var(--muted)';
+    recap.textContent = "choisis une durée et au moins une notion pour continuer";
+    btn.style.background = 'rgba(0,0,0,0.1)';
+    btn.style.color = 'var(--muted)';
+    btn.style.cursor = 'not-allowed';
+    btn.disabled = true;
+  }
+}
+
+function lancerBrevet() {
+  if (!selectedDuree || selectedNotions.length === 0) return;
+  showPage('bibliotheque');
+}
+
+// ════════════ PRICING ════════════
+function togglePricing(type) {
+  var pm = document.getElementById('price-main');
+  var pp = document.getElementById('price-period');
+  var ps = document.getElementById('price-sub');
+  var bm = document.getElementById('tog-month');
+  var by = document.getElementById('tog-year');
+  if (!pm) return;
+  if (type === 'month') {
+    bm.style.background = 'rgba(0,0,0,0.08)'; bm.style.color = 'var(--ink)'; bm.style.borderColor = 'rgba(0,0,0,0.2)';
+    by.style.background = 'transparent'; by.style.color = 'var(--muted)'; by.style.borderColor = 'rgba(0,0,0,0.12)';
+    pm.textContent = '9€'; pp.textContent = '/mois'; ps.textContent = '7 jours essai gratuit sans CB';
+  } else {
+    by.style.background = 'rgba(0,0,0,0.08)'; by.style.color = 'var(--ink)'; by.style.borderColor = 'rgba(0,0,0,0.2)';
+    bm.style.background = 'transparent'; bm.style.color = 'var(--muted)'; bm.style.borderColor = 'rgba(0,0,0,0.12)';
+    pm.textContent = '6€'; pp.textContent = '/mois'; ps.textContent = '72€/an - 2 mois offerts';
+  }
+}
+</script>
+</body>
+</html>
